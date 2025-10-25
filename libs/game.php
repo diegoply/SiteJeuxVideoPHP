@@ -19,3 +19,10 @@ function getAllGames()
     return $games;
 
 };
+
+function getGame(int $id){
+
+    $games = getAllGames();
+    return $games[$id];
+
+}
