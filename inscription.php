@@ -3,6 +3,7 @@
 require_once 'templates/header.php';
 require_once 'libs/pdo.php';
 require_once 'libs/user.php';
+require_once 'libs/session.php';
 // require_once 'libs/game.php';
 
 // $games = getAllGames();
@@ -16,7 +17,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if (count($errors) === 0) {
         // ✅ On ajoute l'utilisateur seulement s'il n'y a pas d'erreurs
-        addUser($pdo, $_POST["username"], $_POST["email"], $_POST["password"]);
+       $res =  addUser($pdo, $_POST["username"], $_POST["email"], $_POST["password"]);
+
+       if($res) {
+
+        header('Location: login.php ');
+
+       } else{
+          $errors["form"] = "Une erreur est survenue pendant l'inscription";
+       }
     } 
 
     // var_dump($resultat);
@@ -27,9 +36,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 <section class="text-gray-400 bg-gray-900 body-font">
+
+        <?php if (isset($errors["form"])): ?>
+          <div class= "text-red-400">
+            <?= $errors["form"] ?>
+          </div>
+        <?php endif; ?>
+    
     <form action="" method="post">
   <div class="container px-5 py-24 mx-auto flex flex-wrap items-center">
-    
+
+   
     <div class="lg:w-2/6 md:w-1/2 bg-gray-800 bg-opacity-50 rounded-lg p-8 flex flex-col md:m-auto w-full mt-10 md:mt-0">
       <h2 class="text-white text-lg font-medium title-font mb-5">Inscription</h2>
       <div class="relative mb-4">

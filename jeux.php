@@ -2,6 +2,7 @@
 // Inclut le header
 require_once 'templates/header.php';
 require_once 'libs/game.php';
+require_once 'libs/session.php';
 
 $games = getAllGames();
 ?>

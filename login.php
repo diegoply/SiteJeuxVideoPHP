@@ -1,11 +1,26 @@
 <?php
 // Inclut le header
 require_once 'templates/header.php';
+require_once 'libs/session.php';
 // require_once 'libs/game.php';
 
 // $games = getAllGames();
 //   var_dump($_POST);
 
+
+$errors = [];
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    $errors = verifyUserLoginPassword();
+
+    if (count($errors) === 0) {
+    
+        header('Location: index.php ');
+    // var_dump($resultat);
+    // var_dump($errors);
+}
+}
 
 ?>
 
