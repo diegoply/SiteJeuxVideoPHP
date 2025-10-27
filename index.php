@@ -29,7 +29,18 @@ $games = getAllGames();
       </div>
     </div>
     <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-      <img class="object-cover object-center rounded" alt="hero" src="assets/images/logo.jpg">
+      <svg width="520" height="420" viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg">
+  <rect x="6" y="6" width="508" height="208" rx="24" fill="#0b1220" />
+  <circle cx="122" cy="94" r="54" fill="#3b82f6" />
+  <!-- pictogramme simplifié -->
+  <g transform="translate(96,68) scale(0.9)" fill="#0b1220">
+    <path d="M34 6c-6.6 0-12 5.4-12 12v4c0 2.2-1.8 4-4 4h-6c-6.6 0-12 5.4-12 12v2c0 6.6 5.4 12 12 12h44c6.6 0 12-5.4 12-12v-2c0-6.6-5.4-12-12-12h-6c-2.2 0-4-1.8-4-4v-4c0-6.6-5.4-12-12-12z" />
+    <circle cx="24" cy="30" r="4" fill="#ffffff" />
+    <circle cx="40" cy="30" r="3" fill="#ffffff" />
+  </g>
+  <text x="180" y="48" font-family="Inter, Arial, sans-serif" font-size="44" font-weight="700" fill="#ffffff">All</text>
+  <text x="180" y="92" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="600" fill="#94a3b8">Games</text>
+</svg>
     </div>
   </div>
 </section>

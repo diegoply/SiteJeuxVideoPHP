@@ -10,7 +10,18 @@
     <header class="text-gray-400 bg-gray-900 body-font">
   <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
     <a href="index.php" class="flex title-font font-medium items-center text-white mb-4 md:mb-0">
-      <img src="assets/images/logo.jpg" width="120"></img>
+      <svg width="403" height="100" viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg">
+  <rect x="6" y="6" width="508" height="208" rx="24" fill="#0b1220" />
+  <circle cx="122" cy="94" r="54" fill="#3b82f6" />
+  <!-- pictogramme simplifié -->
+  <g transform="translate(96,68) scale(0.9)" fill="#0b1220">
+    <path d="M34 6c-6.6 0-12 5.4-12 12v4c0 2.2-1.8 4-4 4h-6c-6.6 0-12 5.4-12 12v2c0 6.6 5.4 12 12 12h44c6.6 0 12-5.4 12-12v-2c0-6.6-5.4-12-12-12h-6c-2.2 0-4-1.8-4-4v-4c0-6.6-5.4-12-12-12z" />
+    <circle cx="24" cy="30" r="4" fill="#ffffff" />
+    <circle cx="40" cy="30" r="3" fill="#ffffff" />
+  </g>
+  <text x="180" y="48" font-family="Inter, Arial, sans-serif" font-size="44" font-weight="700" fill="#ffffff">All</text>
+  <text x="180" y="92" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="600" fill="#94a3b8">Games</text>
+</svg>
     </a>
     <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
       <a href="jeux.php" class="mr-5 hover:text-white">Liste des jeux</a>
@@ -18,10 +29,9 @@
       <a class="mr-5 hover:text-white">Third Link</a>
       <a class="mr-5 hover:text-white">Fourth Link</a>
     </nav>
-    <a href="inscription.php" class="inline-flex items-center bg-gray-800 border-0 py-1 px-3 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0">Inscription
-      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
-        <path d="M5 12h14M12 5l7 7-7 7"></path>
-      </svg>
-</a>
+    <a href="inscription.php" class="mr-4 inline-flex items-center bg-gray-800 border-0 py-1 px-3 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0">Inscription
+  </a>
+  <a href="login.php" class="inline-flex items-center bg-gray-800 border-0 py-1 px-3   focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0">Connexion
+  </a>
   </div>
 </header>
