@@ -6,6 +6,10 @@ require_once 'libs/user.php';
 require_once 'libs/session.php';
 // require_once 'libs/game.php';
 
+if(isLoggedIn()){
+  header('location: index.php');
+}
+
 // $games = getAllGames();
 //   var_dump($_POST);
 // var_dump($pdo);

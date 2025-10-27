@@ -1,24 +1,23 @@
 <?php
 
-function getAllGames()
+function getAllGames(PDO $pdo, ?int $limit = null)
 {
-   $games = [
-  [
-    "name" =>  "The Legend of Zelda: Breath of the Wild", "description" => "Un jeu d’action-aventure en monde ouvert sur Nintendo Switch."
-  ],
-  [
-    "name" =>  "Assassin's Creed Valhalla", "description" => "Incarnez un Viking dans cette aventure épique signée Ubisoft."
-  ],
-  [
-    "name" =>  "FIFA 23", "description" => "Simulation de football réaliste avec de nombreuses ligues."
-  ],
-  
+    $sql = "SELECT g.id, g.name, g.description, g.release_date FROM game g ORDER BY g.release_date DESC";
+    
+    if ($limit) {
+        $sql .= " LIMIT :limit"; // note l'espace avant LIMIT
+    }
 
-];
+    $query = $pdo->prepare($sql);
 
-    return $games;
+    if ($limit) {
+        $query->bindValue(':limit', $limit, PDO::PARAM_INT);
+    }
 
-};
+    $query->execute();
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+}
+
 
 function getGame(int $id){
 

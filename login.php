@@ -9,6 +9,9 @@ require_once 'libs/pdo.php';
 // $games = getAllGames();
 //   var_dump($_POST);
 
+if(isLoggedIn()){
+  header('location: index.php');
+}
 
 $errors = [];
 
