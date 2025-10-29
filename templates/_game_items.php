@@ -1,6 +1,11 @@
+
+
+
+
 <div class="p-4 md:w-1/3 sm:mb-0 mb-6">
         <div class="rounded-lg h-64 overflow-hidden">
-          <img alt="content" class="object-cover object-center h-full w-full" src="https://dummyimage.com/1203x503">
+          <img alt="content" class="object-cover object-center h-full w-full" src="<?php echo htmlspecialchars($game['image'], ENT_QUOTES); ?>" 
+         alt="<?php echo htmlspecialchars($game['name'], ENT_QUOTES); ?>">>
         </div>
         <h2 class="text-xl font-medium title-font text-white mt-5"><?php echo $game["name"] ?></h2>
         <p class="text-base leading-relaxed mt-2"><?php echo substr($game["description"], 0 ,50)  ?></p>

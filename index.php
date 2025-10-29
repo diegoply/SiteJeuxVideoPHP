@@ -10,6 +10,8 @@ require_once 'settings/settings.php';
 
 $games = getAllGames($pdo, LATEST_GAMES_LIMIT);
 
+
+
 //  var_dump($_SESSION);
 
 ?>
