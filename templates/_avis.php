@@ -14,7 +14,7 @@
       </svg>
         <h3 class="text-white font-medium text-lg mb-2"> <?php echo ($resAvi['username']) ?></h3>
         <span class="inline-block h-1 w-10 rounded bg-blue-500 mt-8 mb-6"></span>
-        <h3 class="text-white font-medium text-lg mb-2"> <?php echo getReview($resAvi['review']); ?></h3>
+        <h3 class="text-white font-medium text-lg mb-2">Evaluation:<?php echo getReview($resAvi['review']); ?></h3>
         <p class="leading-relaxed text-gray-300 mt-4">"<?php echo nl2br(htmlspecialchars($resAvi['comment'])); ?>"</p>
         <p class="text-sm text-gray-500 mt-4">Posté le <?php echo date("d/m/Y H:i", strtotime($resAvi['created_at'])); ?></p>
     </div>

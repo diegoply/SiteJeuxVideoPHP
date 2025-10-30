@@ -71,12 +71,12 @@ function getReviewMoyenne(PDO $pdo, int $gameId): string {
     }
 
     switch ($note) {
-        case 0: return 'Très mauvais';
-        case 1: return 'Mauvais';
-        case 2: return 'Moyen';
-        case 3: return 'Correct';
-        case 4: return 'Bon';
-        case 5: return 'Excellent';
+        case 0: return 'Très mauvaise';
+        case 1: return 'Mauvaise';
+        case 2: return 'Moyenne';
+        case 3: return 'Correcte';
+        case 4: return 'Bonne';
+        case 5: return 'Excellente';
         default: return 'Aucune note';
     }
 }
@@ -85,21 +85,21 @@ function getReviewMoyenne(PDO $pdo, int $gameId): string {
 
 function getReview($review){
     if ($review === 0){
-        return '<h3>Trés mauvais</h3>';
+        return '<h3>Trés mauvaise</h3>';
     }
     else if ($review === 1){
-        return '<h3>Mauvais</h3>';
+        return '<h3>Mauvaise</h3>';
     }
     else if ($review === 2){
-        return '<h3>Moyen</h3>';
+        return '<h3>Moyenne</h3>';
     }
     else if ($review === 3){
-        return '<h3>Correct</h3>';
+        return '<h3>Correcte</h3>';
     }
     else if ($review === 4){
-        return '<h3>Bon</h3>';
+        return '<h3>Bonne</h3>';
     }
     else if ($review === 5){
-        return '<h3>Excellent</h3>';
+        return '<h3>Excellente</h3>';
     }
 }

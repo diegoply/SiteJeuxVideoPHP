@@ -32,6 +32,12 @@
            class="inline-flex text-white bg-blue-500 border-0 py-2 px-5 focus:outline-none hover:bg-green-600 rounded text-lg">
           Avis
         </a>
+
+        <a href="jeu.php?id=<?=$game["id"]?>" class="text-blue-400 inline-flex items-center mt-3">En savoir plus
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>
+        </a>
       </div>
     <?php endif; ?>
   <?php endif; ?>

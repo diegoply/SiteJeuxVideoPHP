@@ -1,14 +1,25 @@
 <?php
 
-function addToWishlist(PDO $pdo,int $gameId,int $userId): bool{
+function addToWishlist(PDO $pdo, int $gameId, int $userId): bool {
+    // Vérifier si le jeu est déjà dans la wishlist
+    $checkSql = "SELECT id FROM wishlist WHERE game_id = :gameId AND user_id = :userId";
+    $checkQuery = $pdo->prepare($checkSql);
+    $checkQuery->bindValue(":gameId", $gameId, PDO::PARAM_INT);
+    $checkQuery->bindValue(":userId", $userId, PDO::PARAM_INT);
+    $checkQuery->execute();
 
+    if ($checkQuery->fetch(PDO::FETCH_ASSOC)) {
+        // Le jeu est déjà dans la wishlist, ne rien faire
+        return false;
+    }
+
+    // Ajouter le jeu à la wishlist
     $sql = "INSERT INTO wishlist (game_id, user_id, created_at) VALUES (:gameId, :userId, NOW())";
     $query = $pdo->prepare($sql);
     $query->bindValue(":gameId", $gameId, PDO::PARAM_INT);
     $query->bindValue(":userId", $userId, PDO::PARAM_INT);
 
     return $query->execute();
-
 }
 
 function removeFromWishlist(PDO $pdo,int $gameId,int $userId): bool{
