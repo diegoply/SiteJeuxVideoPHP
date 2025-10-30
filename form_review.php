@@ -27,7 +27,7 @@ $game = getGame($pdo, $id);
 $resForm = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $resForm = addToReview(
+    $resForm = addReview(
         $pdo,
         (int)$_POST["note"],
         $_POST["message"],

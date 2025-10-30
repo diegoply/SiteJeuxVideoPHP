@@ -1,30 +1,105 @@
 <?php
 
 
-function addToReview(PDO $pdo,int $review, string $comment,int $gameId,int $userId): array|bool{
+function addReview(PDO $pdo, int $review, string $comment, int $gameId, int $userId): bool {
+    // Vérifier si un avis existe déjà
+    $checkSql = "SELECT id FROM review WHERE game_id = :gameId AND user_id = :userId";
+    $checkQuery = $pdo->prepare($checkSql);
+    $checkQuery->bindValue(":gameId", $gameId, PDO::PARAM_INT);
+    $checkQuery->bindValue(":userId", $userId, PDO::PARAM_INT);
+    $checkQuery->execute();
 
-    $sql = "INSERT INTO review (review, comment, created_at, game_id, user_id) VALUES (:review, :comment, NOW(), :gameId, :userId)";
-    $query = $pdo->prepare($sql);
-    $query->bindValue(":review", $review, PDO::PARAM_INT);
-    $query->bindValue(":comment", $comment, PDO::PARAM_STR);
-    $query->bindValue(":gameId", $gameId, PDO::PARAM_INT);
-    $query->bindValue(":userId", $userId, PDO::PARAM_INT);
+    $existingReview = $checkQuery->fetch(PDO::FETCH_ASSOC);
 
-    return $query->execute();
-
+    if ($existingReview) {
+        // Mettre à jour l'avis existant
+        $updateSql = "UPDATE review 
+                      SET review = :review, comment = :comment, created_at = NOW() 
+                      WHERE id = :id";
+        $updateQuery = $pdo->prepare($updateSql);
+        $updateQuery->bindValue(":review", $review, PDO::PARAM_INT);
+        $updateQuery->bindValue(":comment", $comment, PDO::PARAM_STR);
+        $updateQuery->bindValue(":id", $existingReview['id'], PDO::PARAM_INT);
+        return $updateQuery->execute();
+    } else {
+        // Insérer un nouvel avis
+        $insertSql = "INSERT INTO review (review, comment, created_at, game_id, user_id) 
+                      VALUES (:review, :comment, NOW(), :gameId, :userId)";
+        $insertQuery = $pdo->prepare($insertSql);
+        $insertQuery->bindValue(":review", $review, PDO::PARAM_INT);
+        $insertQuery->bindValue(":comment", $comment, PDO::PARAM_STR);
+        $insertQuery->bindValue(":gameId", $gameId, PDO::PARAM_INT);
+        $insertQuery->bindValue(":userId", $userId, PDO::PARAM_INT);
+        return $insertQuery->execute();
+    }
 }
 
-function getReviewItemByGameIdAndUserId(PDO $pdo, int $gameId, int $userId):array|bool {
 
-    $sql = "SELECT user_id, game_id, review, comment, created_at
-    FROM review
-    WHERE game_id = :gameId AND user_id = :userId";
+function getReviewsByGameId(PDO $pdo, int $gameId): array {
+    $sql = "SELECT r.user_id, r.game_id, r.review, r.comment, r.created_at, u.username
+            FROM review r
+            LEFT JOIN user u ON u.id = r.user_id
+            WHERE r.game_id = :gameId
+            ORDER BY r.created_at DESC";
 
     $query = $pdo->prepare($sql);
-
     $query->bindValue(":gameId", $gameId, PDO::PARAM_INT);
-    $query->bindValue(":userId", $userId, PDO::PARAM_INT);
-
     $query->execute();
-    return $query->fetch(PDO::FETCH_ASSOC);
+
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function getReviewMoyenne(PDO $pdo, int $gameId): string {
+    $sql = "SELECT AVG(r.review) as moyenne
+            FROM review r
+            WHERE r.game_id = :gameId";
+
+    $query = $pdo->prepare($sql);
+    $query->bindValue(":gameId", $gameId, PDO::PARAM_INT);
+    $query->execute();
+
+    $result = $query->fetch(PDO::FETCH_ASSOC);
+
+    // retourne la moyenne arrondie à 2 décimales, ou 0 si aucune review
+     // Moyenne arrondie à l'entier le plus proche, ou 0 si pas de review
+    $note = $result && $result['moyenne'] !== null ? (int) round((float)$result['moyenne']) : 0;
+
+
+     // si pas de review, retourner "Aucune note"
+    if (!$result || $result['moyenne'] === null) {
+        return 'Aucune note';
+    }
+
+    switch ($note) {
+        case 0: return 'Très mauvais';
+        case 1: return 'Mauvais';
+        case 2: return 'Moyen';
+        case 3: return 'Correct';
+        case 4: return 'Bon';
+        case 5: return 'Excellent';
+        default: return 'Aucune note';
+    }
+}
+
+
+
+function getReview($review){
+    if ($review === 0){
+        return '<h3>Trés mauvais</h3>';
+    }
+    else if ($review === 1){
+        return '<h3>Mauvais</h3>';
+    }
+    else if ($review === 2){
+        return '<h3>Moyen</h3>';
+    }
+    else if ($review === 3){
+        return '<h3>Correct</h3>';
+    }
+    else if ($review === 4){
+        return '<h3>Bon</h3>';
+    }
+    else if ($review === 5){
+        return '<h3>Excellent</h3>';
+    }
 }

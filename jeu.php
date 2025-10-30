@@ -45,7 +45,8 @@ $game = getGame($pdo, $id);
 
 if(isLoggedIn()){
     $user = getConnectedUser();
-    $resAvis = getReviewItemByGameIdAndUserId($pdo, $game["id"], $user["id"]);
+    $resAvis = getReviewsByGameId($pdo, $game["id"]);
+
 } else {
     $resAvis = false;
 }
@@ -76,20 +77,21 @@ if(isLoggedIn()){
 
     <div class="flex flex-wrap -mx-4 mt-auto mb-auto lg:w-1/3 sm:w-2/3 content-start sm:pr-10">
       <div class="w-full  px-4 mb-25">
-        <img class="rounded-lg object-cover object-center w-full h-full mb-5" src="https://dummyimage.com/450x200" alt="stats">
+        <img class="rounded-lg object-cover object-center w-full h-full mb-5" src="<?php echo htmlspecialchars($game['image'], ENT_QUOTES); ?>" 
+         alt="<?php echo htmlspecialchars($game['name'], ENT_QUOTES); ?>">
         <div class="leading-relaxed "><?php echo $game["description"] ?></div>
       </div>
       <div class="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
         
         <p class="leading-relaxed">Evaluations</p>
-        <h2 class="title-font font-medium text-sm text-white">Trés positive</h2>
+        <h2 class="title-font font-medium text-sm text-white"><?php echo getReviewMoyenne($pdo, $game['id']); ?></h2>
       </div>
       <div class="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
         
-        <p class="leading-relaxed">Favoris</p>
+        <!-- <p class="leading-relaxed">Favoris</p>
         <h2 class="title-font font-medium text-sm text-white">35K</h2>
       </div>
-      <div class="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
+      <div class="p-4 sm:w-1/2 lg:w-1/4 w-1/2"> -->
         
         <p class="leading-relaxed">Sortie</p>
         <h2 class="title-font font-medium text-sm text-white"><?php echo $game["release_date"] ?></h2>
@@ -109,7 +111,11 @@ if(isLoggedIn()){
     <?php if($wishlistItems): ?>
 
       <div class="container pt-10 px-5 mx-auto flex flex-wrap">
-    <a href="jeu.php?id=<?=$id?>&removeFromWishlist" class="inline-flex text-white bg-blue-500 border-0 py-2 px-5 focus:outline-none hover:bg-blue-600 rounded text-lg">déja dans votre liste</a>
+    <a href="jeu.php?id=<?=$id?>&removeFromWishlist" class="inline-flex text-white bg-blue-500 border-0 py-2 px-5 focus:outline-none hover:bg-blue-600 rounded text-lg">Déjà dans votre liste (supprimer)</a>
+    <a href="form_review.php?id=<?= (int)$game['id'] ?>"
+        class="ml-6 inline-flex text-white bg-blue-500 border-0 py-2 px-5 focus:outline-none hover:bg-green-600 rounded text-lg">
+      Avis
+    </a>
 
   
 
@@ -117,6 +123,10 @@ if(isLoggedIn()){
 
     <div class="container pt-10 px-5 mx-auto flex flex-wrap">
     <a href="jeu.php?id=<?=$id?>&addToWishlist" class="inline-flex text-white bg-blue-500 border-0 py-2 px-5 focus:outline-none hover:bg-blue-600 rounded text-lg">Ajouter à la liste</a>
+    <a href="form_review.php?id=<?= (int)$game['id'] ?>"
+        class="ml-6 inline-flex text-white bg-blue-500 border-0 py-2 px-5 focus:outline-none hover:bg-green-600 rounded text-lg">
+      Avis
+    </a>
   </div>
 
     
@@ -127,17 +137,22 @@ if(isLoggedIn()){
 
 <?php else: ?>
    <p class="leading-relaxed">Veuillez vous <a href="login.php" class="text-white underline">connecter</a> pour ajouter se jeu à votre liste de souhait</p>
+   
+   
 <?php endif; ?>
 </section>
 
 <?php endif; ?>
 
 
-<?php if ($resAvis): ?>
-<?php foreach($resAvis as $index=>$resAvi): ?>
-    <?php require 'templates/_avis.php'; ?>
-  <?php endforeach; ?>
+<?php if (!empty($resAvis)): ?>
+    <?php foreach($resAvis as $resAvi): ?>
+        <?php require 'templates/_avis.php'; ?>
+    <?php endforeach; ?>
+
 <?php endif; ?>
+
+
 
 
 

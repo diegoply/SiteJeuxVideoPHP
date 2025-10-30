@@ -37,8 +37,8 @@ require_once 'libs/session.php';
       <?php if (isLoggedIn() === TRUE): ?>
       <a href="ma_liste.php" class="mr-5 hover:text-white">Ma liste de souhaits</a>
       <?php endif; ?>
-      <a class="mr-5 hover:text-white">Third Link</a>
-      <a class="mr-5 hover:text-white">Fourth Link</a>
+      <!-- <a class="mr-5 hover:text-white">Third Link</a>
+      <a class="mr-5 hover:text-white">Fourth Link</a> -->
     </nav>
     
 <?php if (isLoggedIn() === TRUE): ?>
