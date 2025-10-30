@@ -64,6 +64,8 @@ $game = getGame($pdo, $id);
       
       
     </div>
+
+    
   </div>
 </section>
 

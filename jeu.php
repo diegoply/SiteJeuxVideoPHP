@@ -5,6 +5,7 @@ require_once 'libs/game.php';
 require_once 'libs/session.php';
 require_once 'libs/pdo.php';
 require_once 'libs/wishlist.php';
+require_once 'libs/review.php';
 
 $error404 = FALSE;
 $wishlistItems = FALSE;
@@ -42,9 +43,15 @@ $game = getGame($pdo, $id);
   $error404 = TRUE;
 }
 
+if(isLoggedIn()){
+    $user = getConnectedUser();
+    $resAvis = getReviewItemByGameIdAndUserId($pdo, $game["id"], $user["id"]);
+} else {
+    $resAvis = false;
+}
 
 
-//  var_dump($game);
+  // var_dump($resAvis);
 
 ?>
 
@@ -124,6 +131,15 @@ $game = getGame($pdo, $id);
 </section>
 
 <?php endif; ?>
+
+
+<?php if ($resAvis): ?>
+<?php foreach($resAvis as $index=>$resAvi): ?>
+    <?php require 'templates/_avis.php'; ?>
+  <?php endforeach; ?>
+<?php endif; ?>
+
+
 
 
 <?php
