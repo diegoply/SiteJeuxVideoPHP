@@ -101,22 +101,24 @@ function getGamesByEditor(PDO $pdo, ?int $editorId = null, ?int $limit = null): 
 function getGamesByGenreAndEditor(PDO $pdo, string $genre, int $editorId): array {
     $sql = "
         SELECT g.id, g.name, g.description, g.release_date, g.image, e.name AS editor,
-               GROUP_CONCAT(ge.name SEPARATOR ', ') AS genres
+               GROUP_CONCAT(DISTINCT ge.name ORDER BY ge.name SEPARATOR ', ') AS genres
         FROM game g
         JOIN editor e ON g.editor_id = e.id
         JOIN game_genre gg ON g.id = gg.game_id
         JOIN genre ge ON gg.genre_id = ge.id
-        WHERE g.editor_id = :editor_id
+        WHERE g.editor_id = :editor_id AND ge.name = :genre
         GROUP BY g.id
-        HAVING FIND_IN_SET(:genre, genres)
         ORDER BY g.release_date DESC
     ";
+
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':editor_id', $editorId, PDO::PARAM_INT);
     $stmt->bindParam(':genre', $genre, PDO::PARAM_STR);
     $stmt->execute();
+
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
 
 // Liste des genres
 function getAllGenres(PDO $pdo): array {
@@ -129,3 +131,4 @@ function getAllEditors(PDO $pdo): array {
     $stmt = $pdo->query("SELECT id, name FROM editor ORDER BY name");
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
