@@ -5,7 +5,25 @@ require_once 'libs/game.php';
 require_once 'libs/session.php';
 require_once 'libs/pdo.php';
 
-$games = getAllGames($pdo);
+$selectedGenre = isset($_GET['genre']) ? $_GET['genre'] : null;
+
+if ($selectedGenre) {
+    $games = getGamesByGenre($pdo, $selectedGenre);
+} else {
+    $games = getAllGames($pdo);
+}
+
+$selectedGenre = isset($_GET['genre']) ? $_GET['genre'] : null;
+
+if ($selectedGenre) {
+    $games = getGamesByGenre($pdo, $selectedGenre);
+} else {
+    $games = getAllGames($pdo);
+}
+
+$genres = getAllGenres($pdo);
+
+
 ?>
 
 
@@ -20,9 +38,21 @@ $games = getAllGames($pdo);
         <h1 class="sm:w-2/5 text-white font-medium title-font text-2xl mb-2 sm:mb-0">Liste des Jeux</h1>
         
       </div>
+      <form method="GET" class="mb-8">
+  <select name="genre" onchange="this.form.submit()" class="bg-gray-800 text-white border border-gray-700 rounded px-4 py-2">
+    <option value="">-- Tous les genres --</option>
+    <?php foreach ($genres as $genre): ?>
+      <option value="<?= htmlspecialchars($genre) ?>" <?= $genre == $selectedGenre ? 'selected' : '' ?>>
+        <?= htmlspecialchars($genre) ?>
+      </option>
+    <?php endforeach; ?>
+  </select>
+</form>
+
     </div>
     <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
 
+    
    <?php foreach($games as $index=>$game): ?>
     <?php require 'templates/_game_items.php'; ?>
   <?php endforeach; ?>
